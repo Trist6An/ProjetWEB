@@ -4,109 +4,113 @@
 <h1>Candidature</h1>
 <div id='main'>
     <form action="candidature" method="post">
-        <a>Nom du groupe</a><br>
+        <a>Nom du groupe:</a><br>
         <input type="name" name="name" required="required" value='{$data.name|escape|default:''}'><br>
         {$message['name']|default:''}<br>
 
-        <a>Département d'origine</a><br>
-        <input type="number" name="departement" required="required" value='{$data.departement|escape|default:''}'><br>
-        {$message['departement']|default:''}<br>
-
+        <a>Département d'origine:</a><br>
+        <SELECT name="département" size="1" value='{$data.departement|escape|default:''}'> <br>
+        <OPTION>{$departement.1|escape|default:''}
+        <OPTION>{$departement.2|escape|default:''}
+        <OPTION>{$departement.3|escape|default:''}
+        <OPTION>{$departement.4|escape|default:''}
+        <OPTION>{$departement.5|escape|default:''}
+       </SELECT> {$message['departement']|default:''}<br>
+ 
         <a>type de scene</a><br>
-        <input type="text" name="scene" required="required" value='{$data.scene|escape|default:''}'><br>
-        {$message['scene']|default:''}<br>
-
-        <a>Répresentant du groupe ( a revoir)</a><br>
+        <SELECT name="scene" size="1" value='{$data.scene|escape|default:''}'> <br>
+        <OPTION>{$scene.1|escape|default:''}
+        <OPTION>{$scene.2|escape|default:''}
+        <OPTION>{$scene.3|escape|default:''}
+        </SELECT> {$message['scene']|default:''}<br>
+        
+        <a>Répresentant du groupe: ( a revoir)</a><br>
         <input type="town" name="ville" required="required" value='{$data.ville|escape|default:''}'><br>
-        {$message['ville']|default:''}<br>
+        {$messages['ville']|default:''}<br>
 
-        <a>Style musical</a><br>
+        <a>Style musical:</a><br>
         <input type="country" name="stylemusical" required="required" value='{$data.stylemusical|escape|default:''}'><br>
-        {$message['stylemusical']|default:''}<br>
+        {$messages['stylemusical']|default:''}<br>
 
-        <a>Année de création</a><br>
+        <a>Année de création:</a><br>
         <input type="month" name="creation" required="required" value='{$data.creation|escape|default:''}'><br>
-        {$message['creation']|default:''}<br>
+        {$messages['creation']|default:''}<br>
 
-        <a>Présentation du texte (inférieur a 500 caractères)</a><br>
+        <a>Présentation du texte: (inférieur a 500 caractères)</a><br>
         <input type="text" name="textepresentation" required="required" maxlenght=499 value='{$data.textepresentation|escape|default:''}'><br>
-        {$message['textepresentation']|default:''}<br>
+        {$messages['textepresentation']|default:''}<br>
 
-        <a>Expérience scénique (inférieur a 500 caractères)</a><br>
+        <a>Expérience scénique: (inférieur a 500 caractères)</a><br>
         <input type="text" name="experience" maxlenght=499 required="required" value='{$data.expericence|escape|default:''}'><br>
-        {$message['experience']|default:''}<br>
+        {$messages['experience']|default:''}<br>
 
-        <a>Présentation du texte (inférieur a 500 caractères)</a><br>
-        <input type="text" name="textepresentation" required="required" maxlenght=499 value='{$data.textepresentation|escape|default:''}'><br>
-        {$message['textepresentation']|default:''}<br>
+        <a>Présentation du texte: (inférieur a 500 caractères)</a><br>
+        <input type="text" name="textepresentation" required="required" maxlenght=499 value='{$data.textepresentation|escape|default:''}'>
+        <br>
+        {$messages['textepresentation']|default:''}<br>
 
-        <a>Site Web ou page Facebook</a><br>
+        <a>Site Web ou page Facebook:</a><br>
         <input type="url" name="sitefb" required="required" value='{$data.sitefb|escape|default:''}'><br>
-        {$message['sitefb']|default:''}<br>
+        {$messages['sitefb']|default:''}<br>
 
-        <a>Soundcloud (Facultatif)</a><br>
+        <a>Soundcloud: (Facultatif)</a><br>
         <input type="url" name="soundcloud" value='{$data.soundcloud|escape|default:''}'><br>
-        {$message['soundcloud']|default:''}<br>
+        {$messages['soundcloud']|default:''}<br>
 
-        <a>Youtube (Facultatif)</a><br>
+        <a>Youtube: (Facultatif)</a><br>
         <input type="url" name="youtube" value='{$data.youtube|escape|default:''}'><br>
-        {$message['youtube']|default:''}<br>
+        {$messages['youtube']|default:''}<br>
 
-        <a>membre du groupe nombre</a><br>
+        <a>membre du groupe: nombre</a><br>
         <input type="number" name="nbmembre" min="1" max="10" value="1" required="required" value='{$data.nbmembre|escape|default:''}'><br>
-        {$message['nbmembre']|default:''}<br>
+        {$messages['nbmembre']|default:''}<br>
 
-        <a>Status associatif</a><br>
-        <input type="checkbox" id="status" name="status" value='{$data.status|escape|default:''}'>
-        <label for="status">Oui</label>
-        {$message['status']|default:''}<br>
-        <input type="checkbox" id="status" name="status" value='{$data.status|escape|default:''}'>
-        <label for="status">Non</label>
-        {$message['status']|default:''}<br><br>
+        <a>Status associatif:</a><br>
+        <input type="radio" id="statusoui" name="statusoui" value='{$data.statusoui|escape|default:''}'><br>
+        <label for="statusoui">Oui</label>
+        {$messages['statusoui']|default:''}<br>
+        <input type="radio" id="statusnon" name="statusnon" value='{$data.statusnon|escape|default:''}'><br>
+        <label for="statusnon">Non</label>
+        {$messages['statusnon']|default:''}<br>
 
-        <a>Inscrit a la SACEM</a><br>
-        <input type="checkbox" id="sacem" name="sacem" value='{$data.sacem|escape|default:''}'>
-        <label for="sacem">Oui</label>
-        {$message['sacem']|default:''}<br>
-        <input type="checkbox" id="sacem" name="sacem" value='{$data.sacem|escape|default:''}'>
-        <label for="sacem">Non</label>
-        {$message['sacem']|default:''}<br><br>
+        <a>Inscrit a la SACEM:</a><br>
+        <input type="radio" id="sacemoui" name="sacemoui" value='{$data.sacemoui|escape|default:''}'><br>
+        <label for="sacemoui">Oui</label>
+        {$messages['sacemoui']|default:''}<br>
+        <input type="radio" id="sacemnoni" name="sacemnon" value='{$data.sacemnon|escape|default:''}'><br>
+        <label for="sacemnon">Non</label>
+        {$messages['sacemnon']|default:''}<br>
 
-        <a>Producteur</a><br>
-        <input type="checkbox" id="producteur" name="producteur" value='{$data.producteur|escape|default:''}'>
-        <label for="producteur">Oui</label>
-        {$message['producteur']|default:''}<br>
-        <input type="checkbox" id="producteur" name="producteur" value='{$data.producteur|escape|default:''}'>
-        <label for="producteur">Non</label>
-        {$message['producteur']|default:''}<br><br>
+        <a>Producteur:</a><br>
+        <input type="radio" id="producteuroui" name="producteuroui" value='{$data.producteuroui|escape|default:''}'><br>
+        <label for="producteuroui">Oui</label>
+        {$messages['producteuroui']|default:''}<br>
+        <input type="radio" id="producteurnon" name="producteurnon" value='{$data.producteurnon|escape|default:''}'><br>
+        <label for="producteurnon">Non</label>
+        {$messages['producteurnon']|default:''}<br>
 
-        <a>3 Fichier MP3</a><br>
-        <input type="file" name="music1" accept=".mp3" required="required" value='{$data.music1|escape|default:''}'><br>
-        {$message['mp3']|default:''}<br>
-        <input type="file" name="music2" accept=".mp3" required="required" value='{$data.music2|escape|default:''}'><br>
-        {$message['mp3']|default:''}<br>
-        <input type="file" name="music3" accept=".mp3" required="required" value='{$data.music3|escape|default:''}'><br>
-        {$message['mp3']|default:''}<br>
+        <a>3 Fichier MP3:</a><br>
+        <input type="file" name="mp3" multiple accept=".mp3" required="required" value='{$data.mp3|escape|default:''}'><br>
+        {$messages['mp3']|default:''}<br>
 
-        <a>Dossier de presse ( facultatif )</a><br>
+        <a>Dossier de presse: ( facultatif )</a><br>
         <input type="file" name="presse" accept=".pdf" value='{$data.presse|escape|default:''}'><br>
-        {$message['presse']|default:''}<br>
+        {$messages['presse']|default:''}<br>
 
-        <a>2 Photos de groupe</a><br>
-        <input type="file" name="photo1" accept=".jpg, .jpeg, .png" required="required" value='{$data.photo1|escape|default:''}'><br>
-        {$message['photo1']|default:''}<br>
-        <input type="file" name="photo2" accept=".jpg, .jpeg, .png" required="required" value='{$data.photo2|escape|default:''}'><br>
-        {$message['photo2']|default:''}<br>
+        <a>2 Photos de groupe:</a><br>
+        <input type="file" name="photo" multiple accept=".jpg, .jpeg, .png" required="required" value='{$data.photo|escape|default:''}'><br>
+        {$messages['photo']|default:''}<br>
 
-        <a>Fiche technique format PDF</a><br>
+        <a>Fiche technique format PDF:</a><br>
         <input type="file" name="fiche" accept=".pdf" required="required" value='{$data.fiche|escape|default:''}'><br>
-        {$message['fiche']|default:''}<br>
+        {$messages['fiche']|default:''}<br>
 
-        <a>Document SACEM format PDF</a><br>
+        <a>Document SACEM format PDF:</a><br>
         <input type="file" name="docsacem" multiple accept=".pdf" required="required" value='{$data.docsacem|escape|default:''}'><br>
-        {$message['docsacem']|default:''}<br>
+        {$messages['docsacem']|default:''}<br>
 
         <input type="submit" name="" value="Inscription">
     </form>
 </div>
 {/block}
+  
