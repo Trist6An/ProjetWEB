@@ -57,31 +57,35 @@
         {$message['nbmembre']|default:''}<br>
 
         <a>Status associatif</a><br>
-        <input type="checkbox" id="statusoui" name="statusoui" value='{$data.statusoui|escape|default:''}'>
-        <label for="statusoui">Oui</label>
-        {$message['statusoui']|default:''}<br>
-        <input type="checkbox" id="statusnon" name="statusnon" value='{$data.statusnon|escape|default:''}'>
-        <label for="statusnon">Non</label>
-        {$message['statusnon']|default:''}<br><br>
+        <input type="checkbox" id="status" name="status" value='{$data.status|escape|default:''}'>
+        <label for="status">Oui</label>
+        {$message['status']|default:''}<br>
+        <input type="checkbox" id="status" name="status" value='{$data.status|escape|default:''}'>
+        <label for="status">Non</label>
+        {$message['status']|default:''}<br><br>
 
         <a>Inscrit a la SACEM</a><br>
-        <input type="checkbox" id="sacemoui" name="sacemoui" value='{$data.sacemoui|escape|default:''}'>
-        <label for="sacemoui">Oui</label>
-        {$message['sacemoui']|default:''}<br>
-        <input type="checkbox" id="sacemnoni" name="sacemnon" value='{$data.sacemnon|escape|default:''}'>
-        <label for="sacemnon">Non</label>
-        {$message['sacemnon']|default:''}<br><br>
+        <input type="checkbox" id="sacem" name="sacem" value='{$data.sacem|escape|default:''}'>
+        <label for="sacem">Oui</label>
+        {$message['sacem']|default:''}<br>
+        <input type="checkbox" id="sacem" name="sacem" value='{$data.sacem|escape|default:''}'>
+        <label for="sacem">Non</label>
+        {$message['sacem']|default:''}<br><br>
 
         <a>Producteur</a><br>
-        <input type="checkbox" id="producteuroui" name="producteuroui" value='{$data.producteuroui|escape|default:''}'>
-        <label for="producteuroui">Oui</label>
-        {$message['producteuroui']|default:''}<br>
-        <input type="checkbox" id="producteurnon" name="producteurnon" value='{$data.producteurnon|escape|default:''}'>
-        <label for="producteurnon">Non</label>
-        {$message['producteurnon']|default:''}<br><br>
+        <input type="checkbox" id="producteur" name="producteur" value='{$data.producteur|escape|default:''}'>
+        <label for="producteur">Oui</label>
+        {$message['producteur']|default:''}<br>
+        <input type="checkbox" id="producteur" name="producteur" value='{$data.producteur|escape|default:''}'>
+        <label for="producteur">Non</label>
+        {$message['producteur']|default:''}<br><br>
 
         <a>3 Fichier MP3</a><br>
-        <input type="file" name="mp3" multiple accept=".mp3" required="required" value='{$data.mp3|escape|default:''}'><br>
+        <input type="file" name="music1" accept=".mp3" required="required" value='{$data.music1|escape|default:''}'><br>
+        {$message['mp3']|default:''}<br>
+        <input type="file" name="music2" accept=".mp3" required="required" value='{$data.music2|escape|default:''}'><br>
+        {$message['mp3']|default:''}<br>
+        <input type="file" name="music3" accept=".mp3" required="required" value='{$data.music3|escape|default:''}'><br>
         {$message['mp3']|default:''}<br>
 
         <a>Dossier de presse ( facultatif )</a><br>
@@ -89,8 +93,10 @@
         {$message['presse']|default:''}<br>
 
         <a>2 Photos de groupe</a><br>
-        <input type="file" name="photo" multiple accept=".jpg, .jpeg, .png" required="required" value='{$data.photo|escape|default:''}'><br>
-        {$message['photo']|default:''}<br>
+        <input type="file" name="photo1" accept=".jpg, .jpeg, .png" required="required" value='{$data.photo1|escape|default:''}'><br>
+        {$message['photo1']|default:''}<br>
+        <input type="file" name="photo2" accept=".jpg, .jpeg, .png" required="required" value='{$data.photo2|escape|default:''}'><br>
+        {$message['photo2']|default:''}<br>
 
         <a>Fiche technique format PDF</a><br>
         <input type="file" name="fiche" accept=".pdf" required="required" value='{$data.fiche|escape|default:''}'><br>
