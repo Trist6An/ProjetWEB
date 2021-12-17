@@ -14,6 +14,26 @@ Flight::route('./', function(){
     Flight::render("index.tpl",array( 'SESSION'=>$_SESSION ));
 });
 
+Flight::route('GET /candidature', function(){
+    Flight::render("candidature.tpl",array());
+});
+
+Flight::route('POST /candidature', function(){
+    $data = Flight::request()->data;
+    $db = new PDO(  //Initialisation de db dans la route /register 
+        "mysql:host = localhost;
+         port=3306;dbname=festival;charset=utf8",
+         "root",
+         "",
+      );
+
+    $request = $db->prepare("insert into candidature values(:ID_responsable,:Nom_groupe,:Départementorigine,:Scene_groupe,:Année_création,:Style_musical,:Presentation,:Expériences_scéniques,:Page_groupe,:Soundcloud,:Youtube,:Statutassociatif,:Sacem,:Producteur,:Music1,:DossierPressePDF,:Music3,:Music2,:Photo1,:Photo2,:Fiche_TechniquePDF,:DocumentsSacemPDF)"); 
+    //Préparation de la requête SQL
+    $request->execute(array( ':ID_responsable'=>$data->name,':Nom_groupe'=>$data->name,':Départementorigine'=>$data->departement,':Scene_groupe'=>$data->scene,':Année_création'=>$data->creation,':Style_musical'=>$data->stylemusical,':Presentation'=>$data->textepresentation,':Expériences_scéniques'=>$data->experience,':Page_groupe'=>$data->sitefb,':Soundcloud'=>$data->soundcloud,':Youtube'=>$data->youtube,':Statutassociatif'=>$data->status,':Sacem'=>$data->sacem,':Producteur'=>$data->producteur,':Music1'=>$data->music1,':Music2'=>$data->music2,':Music3'=>$data->music3,':Photo1'=>$data->photo1,':Photo2'=>$data->photo2,':DossierPressePDF'=>$data->presse,':Fiche_TechniquePDF'=>$data->fiche,':DocumentsSacemPDF'=>$data->docsacem));
+
+    //Flight::render("candidature.tpl",array());
+});
+
 Flight::route('GET /register', function(){ 
    //La route qui permet d'aller sur la page pour créer un compte 
     Flight::render("register.tpl",array());
