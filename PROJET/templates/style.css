@@ -1,0 +1,129 @@
+body {
+    background-color: #222C30;
+    color: #C3CFD4;
+    display: flex;
+    font-size: 20px;
+    flex-direction: column;
+    align-items: center;
+    margin: 0px;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #222C30;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #726087AA;
+    height: 10px;
+}
+
+main {
+    padding: 2% 0% 2% 0%;
+    width: 70%;
+    height:  50%;
+    flex-direction: column;
+}
+
+section {
+    width: 100%;
+    flex-direction: row;
+}
+
+article {
+    width: 100%;
+    flex-direction: column;
+}
+
+#links {
+    flex-direction: row;
+    width: 100%;
+}
+
+form {
+    width: 30%;
+    flex-direction: column;
+}
+
+label {
+    align-self: flex-start;
+}
+
+input {
+    background-color: #726087;
+    border-color: #726087;
+    border-radius: 5px;
+    border-style: solid;
+    width: 100%;
+    margin: 1%;
+}
+
+input[type="submit"] {
+    background-color: #A07EC1;
+    border-color: #A07EC1;
+    color: #222C30;
+    font-weight: bold;
+    margin-top: 8%;
+    width: 70%;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+tr {
+    display: table-row;
+    border-color: #726087;
+    border-width: 3px;
+    border-style: solid;
+}
+
+td {
+    padding: 10px;
+}
+
+table {
+    display: table;
+    border-radius: 20px;
+    border-collapse: collapse;
+}
+
+header {
+    flex-direction: row;
+    justify-content: space-evenly;
+    height: 100px;
+    width: 100%;
+    background-color: #726087;
+}
+
+header div {
+    width: 70%;
+    justify-content: space-evenly;
+    
+}
+
+a {
+    transition: 400ms;
+    text-decoration: none;
+    color: #C3CFD4;
+    margin: 10px;
+    font-size: 100%;
+}
+
+.error {
+    color: #EA3939;
+    font-size: 75%;
+    align-self: flex-start;
+}
+
+header a:hover {
+    font-size: 112%;
+}
+
+a:hover {
+    color: #FFFFFF;
+}
