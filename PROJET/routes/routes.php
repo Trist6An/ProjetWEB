@@ -14,26 +14,6 @@ Flight::route('./', function(){
     Flight::render("index.tpl",array( 'SESSION'=>$_SESSION ));
 });
 
-Flight::route('GET /candidature', function(){
-    Flight::render("candidature.tpl",array());
-});
-
-Flight::route('POST /candidature', function(){
-    $data = Flight::request()->data;
-    $db = new PDO(  //Initialisation de db dans la route /register 
-        "mysql:host = localhost;
-         port=3306;dbname=festival;charset=utf8",
-         "root",
-         "",
-      );
-
-    $request = $db->prepare("insert into candidature values(:ID_responsable,:Nom_groupe,:Départementorigine,:Scene_groupe,:Année_création,:Style_musical,:Presentation,:Expériences_scéniques,:Page_groupe,:Soundcloud,:Youtube,:Statutassociatif,:Sacem,:Producteur,:Music1,:DossierPressePDF,:Music3,:Music2,:Photo1,:Photo2,:Fiche_TechniquePDF,:DocumentsSacemPDF)"); 
-    //Préparation de la requête SQL
-    $request->execute(array( ':ID_responsable'=>$data->name,':Nom_groupe'=>$data->name,':Départementorigine'=>$data->departement,':Scene_groupe'=>$data->scene,':Année_création'=>$data->creation,':Style_musical'=>$data->stylemusical,':Presentation'=>$data->textepresentation,':Expériences_scéniques'=>$data->experience,':Page_groupe'=>$data->sitefb,':Soundcloud'=>$data->soundcloud,':Youtube'=>$data->youtube,':Statutassociatif'=>$data->status,':Sacem'=>$data->sacem,':Producteur'=>$data->producteur,':Music1'=>$data->music1,':Music2'=>$data->music2,':Music3'=>$data->music3,':Photo1'=>$data->photo1,':Photo2'=>$data->photo2,':DossierPressePDF'=>$data->presse,':Fiche_TechniquePDF'=>$data->fiche,':DocumentsSacemPDF'=>$data->docsacem));
-
-    //Flight::render("candidature.tpl",array());
-});
-
 Flight::route('GET /register', function(){ 
    //La route qui permet d'aller sur la page pour créer un compte 
     Flight::render("register.tpl",array());
@@ -251,7 +231,6 @@ if ($count_error == 0 ) {
 
   Flight::render("index.tpl",array('SESSION'=>$_SESSION, 'data'=> $_POST));
  
- 
        }
 
 else {
@@ -285,45 +264,72 @@ Flight::route('GET /sucess', function(){
   Flight::render("sucess.tpl",array());
 });
 
-Flight::route('GET /profil', function(){
-
+Flight::route('GET /candidature', function() {
   session_start(); 
 
-  if (!empty($_SESSION['courriel'])) {
+  if ( empty( $_SESSION['courriel'] ) ) {
+    Flight::render("login.tpl",array());
+  }
+  else {
+  Flight::render("candidature.tpl",array());
+  }
+});
 
- $Email = $_SESSION['courriel']; 
- //Définition de la variable Email qui est le courriel de SESSION
-  $db = new PDO(
+Flight::route('POST /candidature', function() {
+  //La route qui permet d'enregistrer les données de la création de groupe ( Candidature )
+
+  $db = new PDO(  //Initialisation de db dans la route /candidature
     "mysql:host = localhost;
      port=3306;dbname=festival;charset=utf8",
      "root",
      "",
   );
 
-  $recupNom = $db->prepare("SELECT Nom FROM utilisateur WHERE Email = ?");
-  //récupère si une donnée est déjà existante dans la base  
-  $recupNom->execute([$Email]);
-  $_SESSION['Nom']= $recupNom->fetchColumn();
+  $data = Flight::request()->data; 
+  //Récupère les données provenant de la page login.tpl
+  $messages=array();
+  //Initialisation du tableau messages pour afficher les erreurs 
+  $count_error=0; 
+  //Initialisation du nombre d'erreur si l'utilisateur se trompe
 
-  $recupVille = $db->prepare("SELECT Ville FROM utilisateur WHERE Email = ?");
-  //récupère si une donnée est déjà existante dans la base  
-  $recupVille->execute([$Email]);
-  $_SESSION['Ville'] = $recupVille->fetchColumn();
+  if (empty( $data->name )) { //Si la case name est vide alors erreur
+    $messages ['name']="Le nom doit être remplis!";
+    $count_error+=1;
+    }
+    if (empty( $data->departement )) { //Si la case departement est vide alors erreur
+      $messages ['departement']="Le département doit être remplis!";
+      $count_error+=1;
+      }
+      if (empty( $data->stylemusical )) { //Si la case style musical est vide alors erreur
+        $messages ['stylemusical']="Le stylemusical doit être remplis!";
+        $count_error+=1;
+        }
+        if (empty( $data->scene )) { //Si la case scène est vide alors erreur
+          $messages ['scene']="La scène doit être remplis!";
+          $count_error+=1;
+          }
+          $now = date("Y-m");
+          $year_user = $data->creation;
+          if (empty( $data->creation )) { //Si la case scène est vide alors erreur
+            $messages ['creation']="La création doit être remplis!";
+            $count_error+=1;
+            }
+    else if ( $now < $year_user ) {
+  $messages ['creation']="Votre date est dans le futur, mettez votre date de création de groupe!";
+  $count_error+=1;
+}
 
-  $recupPays = $db->prepare("SELECT Pays FROM utilisateur WHERE Email = ?");
-  //récupère si une donnée est déjà existante dans la base  
-  $recupPays->execute([$Email]);
-  $_SESSION['Pays'] = $recupPays->fetchColumn();
 
-        Flight::render("profil.tpl",array('SESSION'=> $_SESSION));
 
-     }
-     else {
+if ($count_error==0) {
 
-      Flight::render("login.tpl",array());
 
-     }
 
+
+  }
+else {
+  Flight::render("candidature.tpl",array('messages'=>$messages, 'data'=> $_POST));
+  }
 });
 
 ?>
