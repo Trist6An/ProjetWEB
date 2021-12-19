@@ -317,19 +317,102 @@ Flight::route('POST /candidature', function() {
     else if ( $now < $year_user ) {
   $messages ['creation']="Votre date est dans le futur, mettez votre date de création de groupe!";
   $count_error+=1;
-}
-
-
+  }
+  if ( empty( $data.statusoui ) || empty( $data.statusnon ) ) {
+    $messages ['status']="Votre date est dans le futur, mettez votre date de création de groupe!";
+    $count_error+=1;
+  }
+  
 
 if ($count_error==0) {
 
 
-
+  Flight::redirect('./sucess');
 
   }
+
 else {
   Flight::render("candidature.tpl",array('messages'=>$messages, 'data'=> $_POST));
   }
+});
+
+Flight::route('GET /vuecandidature', function(){
+  session_start(); 
+
+  if (!empty($_SESSION['courriel'])) {
+
+    $Email = $_SESSION['courriel']; 
+    //Définition de la variable Email qui est le courriel de SESSION
+     $db = new PDO(
+       "mysql:host = localhost;
+        port=3306;dbname=festival;charset=utf8",
+        "root",
+        "",
+     );
+     $recupAdd = $db->prepare("SELECT Adresse_utilisateur FROM utilisateur WHERE Mail_utilisateur = ?");
+     //récupère si une donnée est déjà existante dans la base  
+     $recupAdd->execute([$Email]);
+     $_SESSION['Adresse_utilisateur']= $recupAdd->fetchColumn();
+
+     $recupCP = $db->prepare("SELECT Code_postal FROM utilisateur WHERE Mail_utilisateur = ?");
+     //récupère si une donnée est déjà existante dans la base  
+     $recupCP->execute([$Email]);
+     $_SESSION['Code_postal']= $recupCP->fetchColumn();
+
+     $recupNom = $db->prepare("SELECT Nom_Utilisateur FROM utilisateur WHERE Mail_utilisateur = ?");
+     //récupère si une donnée est déjà existante dans la base  
+     $recupNom->execute([$Email]);
+     $_SESSION['Nom_utilisateur']= $recupNom->fetchColumn();
+   
+     $recupPrem = $db->prepare("SELECT Prenom_Utilisateur FROM utilisateur WHERE Mail_utilisateur = ?");
+     //récupère si une donnée est déjà existante dans la base  
+     $recupPrem->execute([$Email]);
+     $_SESSION['Prenom_utilisateur']= $recupPrem->fetchColumn();
+
+  Flight::render("vuecandidature.tpl",array('SESSION'=> $_SESSION));
+
+    }
+    else {
+      Flight::render("login.tpl",array());
+    }
+});
+
+Flight::route('GET /listecandidature', function(){
+  session_start(); 
+
+  if (!empty($_SESSION['courriel'])) {
+
+    $Email = $_SESSION['courriel']; 
+    //Définition de la variable Email qui est le courriel de SESSION
+     $db = new PDO(
+       "mysql:host = localhost;
+        port=3306;dbname=festival;charset=utf8",
+        "root",
+        "",
+     );
+
+     $recupAdmin = $db->prepare("SELECT Admin FROM utilisateur WHERE Mail_utilisateur = ?");
+     //récupère si une donnée est déjà existante dans la base  
+     $recupAdmin->execute([$Email]);
+     $_SESSION['Admin']= $recupAdmin->fetchColumn();
+
+     if ($_SESSION['Admin']==1) {
+
+      Flight::render("listecandidature.tpl",array());
+
+
+      }
+      else {
+
+        Flight::render("index.tpl",array('SESSION'=> $_SESSION));
+
+      }
+    }
+   else {
+    Flight::render("index.tpl",array());
+   }
+
+
 });
 
 ?>
