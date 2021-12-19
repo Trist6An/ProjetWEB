@@ -12,7 +12,7 @@ Bienvenue!<br>
 <a href='login'>Se Connecter</a> 
 {else}
 Bienvenue {$SESSION['Nom']} ! <br>
-Voir <a href='vuecandidature'>Mon Profil </a> |
+Voir <a href='vuecandidature'>Mon Profil Candidature</a> |
 <a href='logout'>Me déconnecter</a>
 {/if}
 
