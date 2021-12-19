@@ -96,13 +96,13 @@ Flight::route('POST /register' , function()  {
     
     $email = $data->courriel; 
     //Définition d'Email, une variable équivalente à $data->courriel ( pour la simplification )
-    $verif = $db->prepare("SELECT * FROM utilisateur WHERE Email = ?"); 
+    $verif = $db->prepare("SELECT * FROM utilisateur WHERE Mail_utilisateur = ?"); 
     //Préparation de la requête SQL afin de vérifier à la fin l'adresse e-mail
    //récupère si une donnée est déjà existante dans la base avec $email 
     $verif->execute([$email]); //On execute la requête SQL
     $verifemail = $verif->fetch(); 
     //Vérification si $email existe déjà ou non, $verifemail étant un booléen
-
+  
    if ($verifemail) { //Si l'email existe déjà alors erreur
     $messages['email']="L'email existe déjà";
     $count_error+=1;
@@ -206,7 +206,7 @@ if (  filter_var( $data->courriel , FILTER_VALIDATE_EMAIL) == TRUE ) {
     $count_error+=1;
     $messages ['email']="L'email est inexistant!";
  }
- else if ( $verifmdp == FALSE ) { //Si l'email existe mais que le mot de passe est mauvais
+ else if ( $verifmdp == FALSE && !empty( $data->motdepasse ) ) { //Si l'email existe mais que le mot de passe est mauvais
 
   $count_error+=1;
   $messages ['motdepasse']="Mauvais Mot de Passe";
