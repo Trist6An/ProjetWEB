@@ -147,9 +147,6 @@ else {
 });
 
 
-
-
-
 Flight::route('POST /login' , function()  { 
   //La route qui permet d'enregistrer les données de la connexion au compte d'un utilisateur
 
@@ -306,7 +303,7 @@ Flight::route('POST /candidature', function() {
      "root",
      "",
   );
-
+  $_FILES = Flight::request()->files;
   $data = Flight::request()->data; 
   //Récupère les données provenant de la page candidature.tpl
   $messages=array();
@@ -340,8 +337,16 @@ Flight::route('POST /candidature', function() {
   $messages ['creation']="Votre date est dans le futur, mettez votre date de création de groupe!";
   $count_error+=1;
   }
-  if ( empty( $data.statusoui ) || empty( $data.statusnon ) ) {
-    $messages ['status']="Votre date est dans le futur, mettez votre date de création de groupe!";
+  if ( empty( $data->statusoui ) || empty( $data->statusnon ) ) {
+    $messages ['status']="Veuillez sélectionner Oui ou Non";
+    $count_error+=1;
+  }
+  if ( empty( $data->sacemoui ) || empty( $data->sacemnon ) ) {
+    $messages ['sacem']="Veuillez sélectionner Oui ou Non";
+    $count_error+=1;
+  }
+  if ( empty( $data->producteuroui ) || empty( $data->producteurnon ) ) {
+    $messages ['producteur']="Veuillez sélectionner Oui ou Non";
     $count_error+=1;
   }
   
@@ -355,12 +360,30 @@ if ($count_error==0) {
 
 else {
 
-  $recupPrem = $db->prepare("SELECT Prenom_Utilisateur FROM utilisateur WHERE Mail_utilisateur = ?");
-  //récupère si une donnée est déjà existante dans la base  
-  $recupPrem->execute([$Email]);
-  $_SESSION['Prenom_utilisateur']= $recupPrem->fetchColumn();
+  $db = new PDO(  //Initialisation de db dans la route /login
+    "mysql:host = localhost;
+     port=3306;dbname=festival;charset=utf8",
+     "root",
+     "",
+  );
 
-  Flight::render("candidature.tpl",array('messages'=>$messages, 'data'=> $_POST));
+
+  for ( $Nb = 1; $Nb < 7; $Nb++  ) {
+    $recupDep = $db->prepare("SELECT Nom_Departement FROM département WHERE ID_Departement = ?");
+    //récupère si une donnée est déjà existante dans la base  7 fois 
+    $recupDep->execute([$Nb]);
+    $tabdep[$Nb]= $recupDep->fetchColumn();
+  }
+    
+for ( $Nb2 = 1; $Nb2 < 4; $Nb2++  ) {
+$recupscene = $db->prepare("SELECT Nom_scene FROM scene WHERE ID_scene = ?");
+//récupère si une donnée est déjà existante dans la base 4 fois
+$recupscene->execute([$Nb2]);
+$tabscene[$Nb2]= $recupscene->fetchColumn();
+}
+
+  Flight::render("candidature.tpl",array('messages'=>$messages, 'data'=> $_POST , 
+  'tabdep' => $tabdep , 'tabscene' => $tabscene , 'files'=>$_FILES ));
   }
 });
 
