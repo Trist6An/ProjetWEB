@@ -271,9 +271,29 @@ Flight::route('GET /candidature', function() {
     Flight::render("login.tpl",array());
   }
   else {
+    $db = new PDO(  //Initialisation de db dans la route /login
+      "mysql:host = localhost;
+       port=3306;dbname=festival;charset=utf8",
+       "root",
+       "",
+    );
 
 
-  Flight::render("candidature.tpl",array());
+    for ( $Nb = 1; $Nb < 7; $Nb++  ) {
+      $recupDep = $db->prepare("SELECT Nom_Departement FROM département WHERE ID_Departement = ?");
+      //récupère si une donnée est déjà existante dans la base  
+      $recupDep->execute([$Nb]);
+      $tabdep[$Nb]= $recupDep->fetchColumn();
+    }
+      
+for ( $Nb2 = 1; $Nb2 < 4; $Nb2++  ) {
+  $recupscene = $db->prepare("SELECT Nom_scene FROM scene WHERE ID_scene = ?");
+  //récupère si une donnée est déjà existante dans la base  
+  $recupscene->execute([$Nb2]);
+  $tabscene[$Nb2]= $recupscene->fetchColumn();
+}
+
+  Flight::render("candidature.tpl",array('tabdep' => $tabdep , 'tabscene' => $tabscene ));
   }
 });
 
@@ -288,7 +308,7 @@ Flight::route('POST /candidature', function() {
   );
 
   $data = Flight::request()->data; 
-  //Récupère les données provenant de la page login.tpl
+  //Récupère les données provenant de la page candidature.tpl
   $messages=array();
   //Initialisation du tableau messages pour afficher les erreurs 
   $count_error=0; 
