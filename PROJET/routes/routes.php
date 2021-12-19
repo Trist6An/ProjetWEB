@@ -271,6 +271,8 @@ Flight::route('GET /candidature', function() {
     Flight::render("login.tpl",array());
   }
   else {
+
+
   Flight::render("candidature.tpl",array());
   }
 });
@@ -332,6 +334,12 @@ if ($count_error==0) {
   }
 
 else {
+
+  $recupPrem = $db->prepare("SELECT Prenom_Utilisateur FROM utilisateur WHERE Mail_utilisateur = ?");
+  //récupère si une donnée est déjà existante dans la base  
+  $recupPrem->execute([$Email]);
+  $_SESSION['Prenom_utilisateur']= $recupPrem->fetchColumn();
+
   Flight::render("candidature.tpl",array('messages'=>$messages, 'data'=> $_POST));
   }
 });
@@ -398,9 +406,13 @@ Flight::route('GET /listecandidature', function(){
 
      if ($_SESSION['Admin']==1) {
 
-      Flight::render("listecandidature.tpl",array());
-
-
+       $table=Flight::get('db')->query(
+        'select candidature.Nom_groupe , candidature.Page_groupe , candidature.Année_création , 
+        candidature.Département_origine , candidature.Presentation , candidature.Style_musical
+        , candidature.Soundcloud , candidature.Scene_groupe , candidature.Expériences_scéniques
+        , candidature.Scene_groupe , candidature.Youtube from candidature');
+       flight::render ('listecandidature.tpl' , array( 'donnees' =>$table));
+         
       }
       else {
 
