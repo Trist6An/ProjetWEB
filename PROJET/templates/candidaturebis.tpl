@@ -13,22 +13,9 @@
                 <input type="name" name="name" required="required" value='{$data.name|escape|default:''}'><br>
                 {$message['name']|default:''}<br>
 
-                <a>Adresse</a><br>
-                <input type="road" name="adresse" required="required" value='{$data.adresse|escape|default:''}'><br>
-                {$message['adresse']|default:''}<br>
-
-                <a>Code Postal</a><br>
-                <input type="number" name="codepostal" required="required" value='{$data.codepostal|escape|default:''}'><br>
-                {$message['codepostal']|default:''}<br>
-
-                <a>Adresse mail</a><br>
-                <input type="email" name="courriel" required="required" value='{$data.courriel|escape|default:''}'><br>
-                {$message['courriel']|default:''}<br>
-
-                <a>Telephone</a><br>
-                <input type="tel" name="telephone" required="required" value='{$data.telephone|escape|default:''}'><br>
-                {$message['telephone']|default:''}<br>
-                
+                <a>Instrument</a><br>
+                <input type="text" name="Instrument" required="required" value='{$data.Instrument|escape|default:''}'><br>
+                {$message['Instrument']|default:''}<br>              
                 
             </form>
          {/for}
