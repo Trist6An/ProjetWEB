@@ -3,7 +3,7 @@
 {block name=body}
 <h1>Candidature bis</h1>
 <div id='main'>
-        {for $foo=1 to=$nbmembre} 
+        {for $foo=1 to $to max=$nbmembre} 
             <form action="candidaturebis" method="post">
                 <a>Nom</a><br>
                 <input type="firstname" name="firstname" required="required" value='{$data.firstname|escape|default:''}'><br>
@@ -29,8 +29,9 @@
                 <input type="tel" name="telephone" required="required" value='{$data.telephone|escape|default:''}'><br>
                 {$message['telephone']|default:''}<br>
                 
-                <input type="submit" name="" value="Inscription">
+                
             </form>
          {/for}
+            <input type="submit" name="" value="Inscription">
 </div>
 {/block}
