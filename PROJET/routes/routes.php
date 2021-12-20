@@ -451,7 +451,7 @@ $titre=$_FILES['fmp3']['name'];
     $normalized = $transliterator->transliterate($namefmp3);
     return $_FILES['fmp3']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
    }
-   $namefmp3=$data->name."music1.mp3";
+   $namefmp3=$data->name."_music1.mp3";
   move_uploaded_file($_FILES['fmp3']['tmp_name'], "./files/MP3/$namefmp3");
  //Upload du fichier fmp3 sur le serveur et plus précisément dans le fichier MP3
 
@@ -463,7 +463,7 @@ $titre=$_FILES['fmp3']['name'];
     $normalized = $transliterator->transliterate($namesmp3);
     return  $_FILES['smp3']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
    }
-   $namesmp3=$data->name."music2.mp3";
+   $namesmp3=$data->name."_music2.mp3";
   move_uploaded_file($_FILES['smp3']['tmp_name'], "./files/MP3/$namesmp3");
  //Upload du fichier smp3 sur le serveur et plus précisément dans le fichier MP3
 
@@ -475,7 +475,7 @@ $titre=$_FILES['fmp3']['name'];
     $normalized = $transliterator->transliterate($nametmp3);
     return $_FILES['tmp3']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
    }
-   $nametmp3=$data->name."music3.mp3";
+   $nametmp3=$data->name."_music3.mp3";
   move_uploaded_file($_FILES['tmp3']['tmp_name'], "./files/MP3/$nametmp3");
   //Upload du fichier tmp3 sur le serveur et plus précisément dans le fichier MP3
 
