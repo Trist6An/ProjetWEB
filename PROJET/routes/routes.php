@@ -19,6 +19,11 @@ Flight::route('GET /register', function(){
     Flight::render("register.tpl",array());
 });
 
+Flight::route('GET /candidaturebis', function(){
+  session_start();
+  Flight::render("candidaturebis.tpl",array('SESSION'=>$_SESSION));
+})
+
 Flight::route('POST /register' , function()  { 
   //La route qui permet d'enregistrer les données de la création de compte
 
@@ -545,7 +550,7 @@ $titre=$_FILES['fmp3']['name'];
       ':DocumentSacemPDF' => $_FILES['docsacem']['name'] , ':Mail_Responsable'=> $mail ) );
      // Execution de la requête SQL qui va insérer les données d'inscription dans la base de donnée
 
-  Flight::redirect('./sucess');
+  Flight::redirect('./candidaturebis');
 
   }
 
