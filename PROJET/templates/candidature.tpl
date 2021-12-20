@@ -2,24 +2,27 @@
 {block name=title}Register{/block}
 {block name=body}
 <main class="flex big">
-    <section class="flex">
+     <section class="flex">
         <article class="flex">
             <h1>Candidature</h1>
-            <form action="candidature" method="post" enctype="multipart/form-data">
+            <form action="candidature" method="POST" enctype="multipart/form-data">
                 <a>Nom du groupe:</a><br>
                 <input type="name" name="name" required="required" value='{$data.name|escape|default:''}'><br>
                 {$message['name']|default:''}<br>
 
                 <a>Département d'origine:</a><br>
                 <SELECT name="département" size="1" value='{$data.departement|escape|default:''}'> <br>
+                <OPTION>
                 <OPTION>{$tabdep[1]|escape|default:''}
                 <OPTION>{$tabdep[2]|escape|default:''}
                 <OPTION>{$tabdep[3]|escape|default:''}
                 <OPTION>{$tabdep[4]|escape|default:''}
                 <OPTION>{$tabdep[5]|escape|default:''}
                 </SELECT> {$message['departement']|default:''}<br>
+
                 <a>type de scene:</a><br>
                 <SELECT name="scene" size="1" value='{$data.scene|escape|default:''}'> <br>
+                    <OPTION>
                     <OPTION>{$tabscene[1]|escape|default:''}
                     <OPTION>{$tabscene[2]|escape|default:''}
                     <OPTION>{$tabscene[3]|escape|default:''}
@@ -42,7 +45,7 @@
                 {$messages['textepresentation']|default:''}<br>
 
                 <a>Expérience scénique: (inférieur a 500 caractères)</a><br>
-                <input type="text" name="texteexperience" maxlenght=499 required="required" value='{$data.texteexpericence|escape|default:''}'><br>
+                <input type="text" name="texteexperience" required="required" maxlenght=499 value='{$data.texteexpericence|escape|default:''}'><br>
                 {$messages['experience']|default:''}<br>
 
                 <a>Site Web ou page Facebook:</a><br>
@@ -62,47 +65,48 @@
                 {$messages['nbmembre']|default:''}<br>
 
                 <a>Status associatif:</a><br>
-                <input type="radio" id="statusoui" name="statusoui" value='{$data.statusoui|escape|default:''}'><br>
-                <label for="statusoui">Oui</label>
-                <input type="radio" id="statusnon" name="statusnon" value='{$data.statusnon|escape|default:''}'><br>
-                <label for="statusnon">Non</label>
-                {$messages['status']|default:''}
+                <SELECT name="status" size="1" value='{$data.status|escape|default:''}'> <br>
+                    <OPTION>
+                    <OPTION>OUI
+                    <OPTION>NON
+                </SELECT> {$message['scene']|default:''}<br>
+                {$messages['status']|default:''}<br>
 
                 <a>Inscrit a la SACEM:</a><br>
-                <input type="radio" id="sacemoui" name="sacemoui" value='{$data.sacemoui|escape|default:''}'><br>
-                <label for="sacemoui">Oui</label>
-                <input type="radio" id="sacemnon" name="sacemnon" value='{$data.sacemnon|escape|default:''}'><br>
-                <label for="sacemnon">Non</label>
-                {$messages['sacem']|default:''}<br>
+                <SELECT name="sacem" size="1" value='{$data.sacem|escape|default:''}'> <br>
+                    <OPTION>
+                    <OPTION>OUI
+                    <OPTION>NON
+                </SELECT> {$message['sacem']|default:''}<br>
 
                 <a>Producteur:</a><br>
-                <input type="radio" id="producteuroui" name="producteuroui" value='{$data.producteuroui|escape|default:''}'><br>
-                <label for="producteuroui">Oui</label>
-                <input type="radio" id="producteurnon" name="producteurnon" value='{$data.producteurnon|escape|default:''}'><br>
-                <label for="producteurnon">Non</label>
-                {$messages['producteur']|default:''}<br>
+                 <SELECT name="producteur" size="1" value='{$data.producteur|escape|default:''}'> <br>
+                    <OPTION>
+                    <OPTION>OUI
+                    <OPTION>NON
+                </SELECT> {$message['producteur']|default:''}<br>
 
                 <a>3 Fichier MP3:</a><br>
-                <input type="file" name="mp3" multiple accept=".mp3" required="required" value='{$files.fmp3|escape|default:''}'><br>
-                <input type="file" name="mp3" multiple accept=".mp3" required="required" value='{$files.smp3|escape|default:''}'><br>
-                <input type="file" name="mp3" multiple accept=".mp3" required="required" value='{$files.tmp3|escape|default:''}'><br>
+                <input type="file" name="fmp3" multiple accept=".mp3" value='{$files[fmp3]|escape|default:''}'><br>
+                <input type="file" name="smp3" multiple accept=".mp3" value='{$files[smp3]|escape|default:''}'><br>
+                <input type="file" name="tmp3" multiple accept=".mp3" value='{$files[tmp3]|escape|default:''}'><br>
                 {$messages['mp3']|default:''}<br>
 
                 <a>Dossier de presse: ( facultatif )</a><br>
-                <input type="file" name="presse" accept=".pdf" value='{$files.presse|escape|default:''}'><br>
+                <input type="file" name="presse" accept=".pdf" value='{$files[presse]|escape|default:''}'><br>
                 {$messages['presse']|default:''}<br>
 
                 <a>2 Photos de groupe:</a><br>
-                <input type="file" name="photo" multiple accept=".jpg, .jpeg, .png" required="required" value='{$files.fphoto|escape|default:''}'><br>
-                <input type="file" name="photo" multiple accept=".jpg, .jpeg, .png" required="required" value='{$files.sphoto|escape|default:''}'><br>
+                <input type="file" name="fphoto" multiple accept=".jpg, .jpeg, .png" value='{$files[fphoto]|escape|default:''}'><br>
+                <input type="file" name="sphoto" multiple accept=".jpg, .jpeg, .png" value='{$files[sphoto]|escape|default:''}'><br>
                 {$messages['photo']|default:''}<br>
 
                 <a>Fiche technique format PDF:</a><br>
-                <input type="file" name="fiche" accept=".pdf" required="required" value='{$files.fiche|escape|default:''}'><br>
+                <input type="file" name="fiche" accept=".pdf" value='{$files[fiche]|escape|default:''}'><br>
                 {$messages['fiche']|default:''}<br>
 
                 <a>Document SACEM format PDF:</a><br>
-                <input type="file" name="docsacem" multiple accept=".pdf" required="required" value='{$files.docsacem|escape|default:''}'><br>
+                <input type="file" name="docsacem" multiple accept=".pdf" value='{$files[docsacem]|escape|default:''}'><br>
                 {$messages['docsacem']|default:''}<br>
 
                 <input type="submit" name="" value="Inscription">
