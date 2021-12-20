@@ -411,7 +411,7 @@ $titre=$_FILES['fmp3']['name'];
     return ( $_FILES['sphoto']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized) );
    }
    $names=$_FILES['sphoto']['name'];
-   move_uploaded_file($_FILES['sphoto']['name'], "./files/Photos/$names");
+   move_uploaded_file($_FILES['sphoto']['tmp_name'], "./files/Photos/$names");
   //Upload du fichier sphoto sur le serveur et plus précisément dans le fichier Photos
 
   $namefi = $_FILES['fiche']['name']; //Modification du nom de fiche
@@ -423,7 +423,7 @@ $titre=$_FILES['fmp3']['name'];
     return ( $_FILES['fiche']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized) );
    }
    $namefi=$_FILES['fiche']['name'];
-  move_uploaded_file($_FILES['fiche']['name'], "./files/Fiche/$namefi");
+  move_uploaded_file($_FILES['fiche']['tmp_name'], "./files/Fiche/$namefi");
  //Upload du fichier fiche sur le serveur et plus précisément dans le fichier Fiche
 
   $namesa = $_FILES['docsacem']['name']; //Modification du nom de docsacem
@@ -435,7 +435,7 @@ $titre=$_FILES['fmp3']['name'];
     return  $_FILES['docsacem']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
    }
    $namesa=$_FILES['docsacem']['name'];
-  move_uploaded_file($_FILES['docsacem']['name'], "./files/Sacem/$namesa");
+  move_uploaded_file($_FILES['docsacem']['tmp_name'], "./files/Sacem/$namesa");
   //Upload du fichier docsacem sur le serveur et plus précisément dans le fichier Sacem
 
   $namefmp3 = $_FILES['fmp3']['name']; //Modification du nom de fmp3
@@ -447,7 +447,7 @@ $titre=$_FILES['fmp3']['name'];
     return $_FILES['fmp3']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
    }
    $namefmp3=$_FILES['fmp3']['name'];
-  move_uploaded_file($_FILES['fmp3']['name'], "./files/MP3/$namefmp3");
+  move_uploaded_file($_FILES['fmp3']['tmp_name'], "./files/MP3/$namefmp3");
  //Upload du fichier fmp3 sur le serveur et plus précisément dans le fichier MP3
 
   $namesmp3 = $_FILES['smp3']['name']; //Modification du nom de smp3
@@ -459,7 +459,7 @@ $titre=$_FILES['fmp3']['name'];
     return  $_FILES['smp3']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
    }
    $namesmp3=$_FILES['smp3']['name'];
-  move_uploaded_file($_FILES['smp3']['name'], "./files/MP3/$namesmp3");
+  move_uploaded_file($_FILES['smp3']['tmp_name'], "./files/MP3/$namesmp3");
  //Upload du fichier smp3 sur le serveur et plus précisément dans le fichier MP3
 
   $nametmp3 = $_FILES['tmp3']['name']; //Modification du nom de tmp3
@@ -471,7 +471,7 @@ $titre=$_FILES['fmp3']['name'];
     return $_FILES['tmp3']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
    }
    $nametmp3=$_FILES['tmp3']['name'];
-  move_uploaded_file($_FILES['tmp3']['name'], "./files/MP3/$nametmp3");
+  move_uploaded_file($_FILES['tmp3']['tmp_name'], "./files/MP3/$nametmp3");
   //Upload du fichier tmp3 sur le serveur et plus précisément dans le fichier MP3
 
   if ( !empty( $_FILES['presse']['name'] ) ) {
