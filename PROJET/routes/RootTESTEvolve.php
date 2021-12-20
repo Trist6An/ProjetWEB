@@ -125,7 +125,7 @@ $request = $db->prepare("insert into utilisateur values(:Mail_utilisateur,:Nom_U
 //Préparation de la requête SQL
 $request->execute(array( ':Admin'=> 0 , ':Adresse_utilisateur'=> $data->Adresse_utilisateur , 
 ':Code_postal'=> $data->Code_postal , ':Mail_utilisateur' => $data->courriel , ':mot_de_passe' => $data->motdepasse ,   
-':Nom_Utilisateur' => $data->Nom_Utilisateur, ':Prenom_utilisateur'=> $data->Prenom_utilisateur   ));
+':Nom_Utilisateur' => $data->Nom_Utilisateur, ':Prenom_utilisateur'=> $data->Prenom_utilisateur ) );
 // Execution de la requête SQL qui va insérer les données d'inscription dans la base de donnée
 
   session_start();  // On ouvre la session
@@ -493,28 +493,44 @@ Flight::route('POST /candidature', function() {
     }
     else {
       
-  //    $_FILES['presse']['name']="rien";
+  // $_FILES['presse']['name']="rien";
 
     }
+    if ($data->status =='OUI' ) { //Réécriture de la variable status en un booléen
+      $data->status=1;
+    }
+    else {
+      $data->status=0;
+    }
 
-    $result=mysql_query("SELECT count(*) as total from candidature");
-    $data->total=mysql_fetch_assoc($result);
-    $data->total=$data->total+1;
+    if ($data->sacem =='OUI' ) {  //Réécriture de la variable Sacem en un booléen
+      $data->sacem=1;
+    }
+    else {
+      $data->sacem=0;
+    }
 
-  $request = $db->prepare("insert into candidature values(:ID_responsable,:Nom_groupe,
-  :Département_origine,:Scene_groupe,:Année_création,:Style_musical,:Presentation,
-  :Expériences_scéniques,:Page_groupe,:Soundcloud,:Youtube,:Statut_associatif,
-  :Producteur,:Music1,:DossierPressePDF,:Music3,:Music2,:Photo1,:Photo2,
-  :Fiche_TechniquePDF,:DocumentSacemPDF)"); 
+    if ($data->producteur =='OUI' ) { //Réécriture de la variable Producteur en un booléen
+      $data->producteur=1;
+    }
+    else {
+      $data->producteur=0;
+    }
+
+  $request = $db->prepare("insert into candidature values( :Nom_groupe ,
+  :Departement_origine , :Scene_groupe , :Annee_creation , :Style_musical , :Presentation ,
+  :Experiences_sceniques , :Page_groupe , :Soundcloud , :Youtube , :Statut_associatif , :Sacem ,
+  :Producteur, :Music1 , :DossierPressePDF , :Music3 , :Music2 , :Photo1 , :Photo2 ,
+  :Fiche_TechniquePDF , :DocumentSacemPDF )"); 
      //Préparation de la requête SQL
 
-     $request->execute(array( ':ID_responsable'=> $data->total , ':Nom_groupe'=> $data->name , 
-     ':Département_origine'=>  $data->departement, ':Scene_groupe' => $data->scene , ':Année_création' => $data->creation ,   
-     ':Style_musical' => $data->stylemusical, ':Presentation'=> $data->textepresentation , ':Expériences_scéniques'=>$data->texteexpericence , 
+     $request->execute( array ( ':Nom_groupe'=> $data->name , ':Departement_origine'=> $data->departement , ':Scene_groupe' => $data->scene , ':Annee_creation' => $data->creation ,   
+     ':Style_musical' => $data->stylemusical , ':Presentation'=> $data->textepresentation , ':Experiences_sceniques'=>$data->texteexpericence , 
      ':Page_groupe'=> $data->sitefb ,  ':Soundcloud'=> $data->soundcloud , ':Youtube'=> $data->youtube ,
-      ':Statut_associatif'=> $data->status , ':Producteur'=> $data->producteur , ':Music1'=>  $_FILES['fmp3']['name'], ':DossierPressePDF'=> $_FILES['presse']['name']
-      , ':Music3' => $_FILES['tmp3']['name']  , ':Music2' => $_FILES['smp3']['name']  , ':Photo1' => $_FILES['fphoto']['name'] , ':Photo2' => $_FILES['sphoto']['name'] , 
-      ':Fiche_TechniquePDF' => $_FILES['fiche']['name'] , ':DocumentSacemPDF' => $_FILES['docsacem']['name'] ));
+      ':Statut_associatif'=> $data->status , ':Sacem'=>$data->sacem , ':Producteur'=> $data->producteur , ':Music1'=>  $_FILES['fmp3']['name'] , 
+      ':DossierPressePDF'=> $_FILES['presse']['name'] , ':Music3' => $_FILES['tmp3']['name']  , ':Music2' => $_FILES['smp3']['name']  , 
+      ':Photo1' => $_FILES['fphoto']['name'] , ':Photo2' => $_FILES['sphoto']['name'] , ':Fiche_TechniquePDF' => $_FILES['fiche']['name'] , 
+      ':DocumentSacemPDF' => $_FILES['docsacem']['name'] ) );
      // Execution de la requête SQL qui va insérer les données d'inscription dans la base de donnée
 
   Flight::redirect('./sucess');
