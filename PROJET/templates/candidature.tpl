@@ -2,23 +2,23 @@
 {block name=title}Register{/block}
 {block name=body}
 <main class="flex big">
-     <section class="flex">
+      <section class="flex">
         <article class="flex">
             <h1>Candidature</h1>
             <form action="candidature" method="POST" enctype="multipart/form-data">
                 <a>Nom du groupe:</a><br>
                 <input type="name" name="name" required="required" value='{$data.name|escape|default:''}'><br>
-                {$message['name']|default:''}<br>
+                {$messages['name']|default:''}<br>
 
                 <a>Département d'origine:</a><br>
-                <SELECT name="département" size="1" value='{$data.departement|escape|default:''}'> <br>
+                <SELECT name="departement" size="1" value='{$data.departement|escape|default:''}'> <br>
                 <OPTION>
                 <OPTION>{$tabdep[1]|escape|default:''}
                 <OPTION>{$tabdep[2]|escape|default:''}
                 <OPTION>{$tabdep[3]|escape|default:''}
                 <OPTION>{$tabdep[4]|escape|default:''}
                 <OPTION>{$tabdep[5]|escape|default:''}
-                </SELECT> {$message['departement']|default:''}<br>
+                </SELECT> {$messages['departement']|default:''}<br>
 
                 <a>type de scene:</a><br>
                 <SELECT name="scene" size="1" value='{$data.scene|escape|default:''}'> <br>
@@ -26,7 +26,7 @@
                     <OPTION>{$tabscene[1]|escape|default:''}
                     <OPTION>{$tabscene[2]|escape|default:''}
                     <OPTION>{$tabscene[3]|escape|default:''}
-                </SELECT> {$message['scene']|default:''}<br>
+                </SELECT> {$messages['scene']|default:''}<br>
                 
                 <a>Répresentant du groupe: </a><br>
                 <input type="representant" name="representant" required="required" value='{$data.representant|escape|default:''}'><br>
@@ -45,8 +45,8 @@
                 {$messages['textepresentation']|default:''}<br>
 
                 <a>Expérience scénique: (inférieur a 500 caractères)</a><br>
-                <input type="text" name="texteexperience" required="required" maxlenght=499 value='{$data.texteexpericence|escape|default:''}'><br>
-                {$messages['experience']|default:''}<br>
+                <input type="text" name="textexperience" required="required" maxlenght=499 value='{$data.textexperience|escape|default:''}'><br>
+                {$messages['textexperience']|default:''}<br>
 
                 <a>Site Web ou page Facebook:</a><br>
                 <input type="url" name="sitefb" required="required" value='{$data.sitefb|escape|default:''}'><br>
@@ -77,16 +77,16 @@
                     <OPTION>
                     <OPTION>OUI
                     <OPTION>NON
-                </SELECT> {$message['sacem']|default:''}<br>
+                </SELECT> {$messages['sacem']|default:''}<br>
 
                 <a>Producteur:</a><br>
                  <SELECT name="producteur" size="1" value='{$data.producteur|escape|default:''}'> <br>
                     <OPTION>
                     <OPTION>OUI
                     <OPTION>NON
-                </SELECT> {$message['producteur']|default:''}<br>
+                </SELECT> {$messages['producteur']|default:''}<br>
 
-                <a>3 Fichier MP3:</a><br>
+                <a>3 Fichiers MP3:</a><br>
                 <input type="file" name="fmp3" multiple accept=".mp3" value='{$files[fmp3]|escape|default:''}'><br>
                 <input type="file" name="smp3" multiple accept=".mp3" value='{$files[smp3]|escape|default:''}'><br>
                 <input type="file" name="tmp3" multiple accept=".mp3" value='{$files[tmp3]|escape|default:''}'><br>
