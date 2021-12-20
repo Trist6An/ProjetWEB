@@ -387,92 +387,91 @@ Flight::route('POST /candidature', function() {
   }
 $titre=$_FILES['fmp3']['name'];
 
-echo $titre;
 
  if ($count_error==0) {
 
-  $name = $_FILES['fphoto']['name']; //Modification du nom de fphoto
-  function NomPhoto1($name){ 
+  $namef = $_FILES['fphoto']['name']; //Modification du nom de fphoto
+  function NomPhoto1($namef){ 
     $transliterator = Transliterator::createFromRules(
    ':: NFD; :: [:Nonspacing Mark:] Remove; ::NFC;', Transliterator::FORWARD
     );
-    $normalized = $transliterator->transliterate($name);
+    $normalized = $transliterator->transliterate($namef);
     return ( $_FILES['fphoto']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized) );
    }
-   $name=$_FILES['fphoto']['name'];
-  move_uploaded_file($_FILES['fphoto']['tmp_name'], "./files/Photos/$name");
+   $namef=$_FILES['fphoto']['name'];
+  move_uploaded_file($_FILES['fphoto']['tmp_name'], "./files/Photos/$namef");
  //Upload du fichier fphoto sur le serveur et plus précisément dans le fichier Photos
 
-  $name = $_FILES['sphoto']['name']; //Modification du nom de sphoto
-  function NomPhoto2($name){ 
+  $names = $_FILES['sphoto']['name']; //Modification du nom de sphoto
+  function NomPhoto2($names){ 
     $transliterator = Transliterator::createFromRules(
    ':: NFD; :: [:Nonspacing Mark:] Remove; ::NFC;', Transliterator::FORWARD
     );
-    $normalized = $transliterator->transliterate($name);
+    $normalized = $transliterator->transliterate($names);
     return ( $_FILES['sphoto']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized) );
    }
-   $name=$_FILES['sphoto']['name'];
-   move_uploaded_file($_FILES['sphoto']['name'], "./files/Photos/$name");
+   $names=$_FILES['sphoto']['name'];
+   move_uploaded_file($_FILES['sphoto']['name'], "./files/Photos/$names");
   //Upload du fichier sphoto sur le serveur et plus précisément dans le fichier Photos
 
-  $name = $_FILES['fiche']['name']; //Modification du nom de fiche
-  function NomFiche($name){ 
+  $namefi = $_FILES['fiche']['name']; //Modification du nom de fiche
+  function NomFiche($namefi){ 
     $transliterator = Transliterator::createFromRules(
    ':: NFD; :: [:Nonspacing Mark:] Remove; ::NFC;', Transliterator::FORWARD
     );
-    $normalized = $transliterator->transliterate($name);
+    $normalized = $transliterator->transliterate($namefi);
     return ( $_FILES['fiche']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized) );
    }
-   $name=$_FILES['fiche']['name'];
-  move_uploaded_file($_FILES['fiche']['name'], "./files/Fiche/$name");
+   $namefi=$_FILES['fiche']['name'];
+  move_uploaded_file($_FILES['fiche']['name'], "./files/Fiche/$namefi");
  //Upload du fichier fiche sur le serveur et plus précisément dans le fichier Fiche
 
-  $name = $_FILES['docsacem']['name']; //Modification du nom de docsacem
-  function NomSacem($name){ 
+  $namesa = $_FILES['docsacem']['name']; //Modification du nom de docsacem
+  function NomSacem($namesa){ 
     $transliterator = Transliterator::createFromRules(
    ':: NFD; :: [:Nonspacing Mark:] Remove; ::NFC;', Transliterator::FORWARD
     );
-    $normalized = $transliterator->transliterate($name);
+    $normalized = $transliterator->transliterate($namesa);
     return  $_FILES['docsacem']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
    }
-   $name=$_FILES['docsacem']['name'];
-  move_uploaded_file($_FILES['docsacem']['name'], "./files/Sacem/$name");
+   $namesa=$_FILES['docsacem']['name'];
+  move_uploaded_file($_FILES['docsacem']['name'], "./files/Sacem/$namesa");
   //Upload du fichier docsacem sur le serveur et plus précisément dans le fichier Sacem
 
-  $name = $_FILES['fmp3']['name']; //Modification du nom de fmp3
-  function NomFMP3($name){ 
+  $namefmp3 = $_FILES['fmp3']['name']; //Modification du nom de fmp3
+  function NomFMP3($namefmp3){ 
     $transliterator = Transliterator::createFromRules(
    ':: NFD; :: [:Nonspacing Mark:] Remove; ::NFC;', Transliterator::FORWARD
     );
-    $normalized = $transliterator->transliterate($name);
+    $normalized = $transliterator->transliterate($namefmp3);
     return $_FILES['fmp3']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
    }
-   $name=$_FILES['fmp3']['name'];
-  move_uploaded_file($_FILES['fmp3']['name'], "./files/MP3/$name");
+   $namefmp3=$_FILES['fmp3']['name'];
+  move_uploaded_file($_FILES['fmp3']['name'], "./files/MP3/$namefmp3");
  //Upload du fichier fmp3 sur le serveur et plus précisément dans le fichier MP3
 
-  $name = $_FILES['smp3']['name']; //Modification du nom de smp3
-  function NomSMP3($name){ 
+  $namesmp3 = $_FILES['smp3']['name']; //Modification du nom de smp3
+  function NomSMP3($namesmp3){ 
     $transliterator = Transliterator::createFromRules(
    ':: NFD; :: [:Nonspacing Mark:] Remove; ::NFC;', Transliterator::FORWARD
     );
-    $normalized = $transliterator->transliterate($name);
+    $normalized = $transliterator->transliterate($namesmp3);
     return  $_FILES['smp3']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
    }
-   $name=$_FILES['smp3']['name'];
-  move_uploaded_file($_FILES['smp3']['name'], "./files/MP3/$name");
+   $namesmp3=$_FILES['smp3']['name'];
+  move_uploaded_file($_FILES['smp3']['name'], "./files/MP3/$namesmp3");
  //Upload du fichier smp3 sur le serveur et plus précisément dans le fichier MP3
 
-  $name = $_FILES['tmp3']['name']; //Modification du nom de tmp3
-  function NomTMP3($name){ 
+  $nametmp3 = $_FILES['tmp3']['name']; //Modification du nom de tmp3
+  function NomTMP3($nametmp3){ 
     $transliterator = Transliterator::createFromRules(
    ':: NFD; :: [:Nonspacing Mark:] Remove; ::NFC;', Transliterator::FORWARD
     );
-    $normalized = $transliterator->transliterate($name);
+    $normalized = $transliterator->transliterate($nametmp3);
     return $_FILES['tmp3']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
    }
-   $name=$_FILES['tmp3']['name'];
-  move_uploaded_file($_FILES['tmp3']['name'], "./files/MP3/$name");
+   $nametmp3=$_FILES['tmp3']['name'];
+  move_uploaded_file($_FILES['tmp3']['name'], "./files/MP3/$nametmp3");
   //Upload du fichier tmp3 sur le serveur et plus précisément dans le fichier MP3
 
   if ( !empty( $_FILES['presse']['name'] ) ) {
@@ -577,11 +576,6 @@ $tabscene[$Nb2]= $recupscene->fetchColumn();
   'tabdep' => $tabdep , 'tabscene' => $tabscene , 'files'=>$_FILES ));
   }
 });
-
-
-
-
-
 
 Flight::route('GET /vuecandidature', function(){
   session_start(); 
