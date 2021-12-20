@@ -2,7 +2,7 @@
 {block name=title}Register{/block}
 {block name=body}
 <main class="flex big">
-      <section class="flex">
+        <section class="flex">
         <article class="flex">
             <h1>Candidature</h1>
             <form action="candidature" method="POST" enctype="multipart/form-data">
@@ -69,9 +69,8 @@
                     <OPTION>
                     <OPTION>OUI
                     <OPTION>NON
-                </SELECT> {$message['scene']|default:''}<br>
-                {$messages['status']|default:''}<br>
-
+                </SELECT>  {$messages['status']|default:''}<br>
+               
                 <a>Inscrit a la SACEM:</a><br>
                 <SELECT name="sacem" size="1" value='{$data.sacem|escape|default:''}'> <br>
                     <OPTION>
@@ -102,7 +101,7 @@
                 {$messages['photo']|default:''}<br>
 
                 <a>Fiche technique format PDF:</a><br>
-                <input type="file" name="fiche" accept=".pdf" value='{$files[fiche]|escape|default:''}'><br>
+                <input type="file" name="fiche" accept=".pdf" value='{$files['fiche']|escape|default:''}'><br>
                 {$messages['fiche']|default:''}<br>
 
                 <a>Document SACEM format PDF:</a><br>
