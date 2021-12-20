@@ -609,7 +609,34 @@ Flight::route('GET /vuecandidature', function(){
      //récupère si une donnée est déjà existante dans la base  
      $recupPrem->execute([$Email]);
      $_SESSION['Prenom_utilisateur']= $recupPrem->fetchColumn();
+    
+     $recupPrem = $db->prepare("SELECT Nom_groupe FROM candidature  WHERE Mail_responsable = ?");
+     //récupère si une donnée est déjà existante dans la base  
+     $recupPrem->execute([$Email]);     
+     $_SESSION['Nom_groupe']= $recupPrem->fetchColumn();
+     
+     $recupPrem = $db->prepare("SELECT Photo1 FROM candidature  WHERE Mail_responsable = ?");
+     //récupère si une donnée est déjà existante dans la base  
+     $recupPrem->execute([$Email]);     
+     $_SESSION['Photos'][0] = $recupPrem->fetchColumn();
+     $recupPrem = $db->prepare("SELECT Photo2 FROM candidature  WHERE Mail_responsable = ?");
+     //récupère si une donnée est déjà existante dans la base  
+     $recupPrem->execute([$Email]);     
+     $_SESSION['Photos'][1] = $recupPrem->fetchColumn();
 
+     $recupPrem = $db->prepare("SELECT Music1 FROM candidature  WHERE Mail_responsable = ?");
+     //récupère si une donnée est déjà existante dans la base  
+     $recupPrem->execute([$Email]);     
+     $_SESSION['Musiques'][0] = $recupPrem->fetchColumn();
+     $recupPrem = $db->prepare("SELECT Music2 FROM candidature  WHERE Mail_responsable = ?");
+     //récupère si une donnée est déjà existante dans la base  
+     $recupPrem->execute([$Email]);     
+     $_SESSION['Musiques'][1] = $recupPrem->fetchColumn();
+     $recupPrem = $db->prepare("SELECT Music3 FROM candidature  WHERE Mail_responsable = ?");
+     //récupère si une donnée est déjà existante dans la base  
+     $recupPrem->execute([$Email]);     
+     $_SESSION['Musiques'][2] = $recupPrem->fetchColumn();
+    
   Flight::render("vuecandidature.tpl",array('SESSION'=> $_SESSION));
 
     }
