@@ -125,7 +125,7 @@ $request = $db->prepare("insert into utilisateur values(:Mail_utilisateur,:Nom_U
 //Préparation de la requête SQL
 $request->execute(array( ':Admin'=> 0 , ':Adresse_utilisateur'=> $data->Adresse_utilisateur , 
 ':Code_postal'=> $data->Code_postal , ':Mail_utilisateur' => $data->courriel , ':mot_de_passe' => $data->motdepasse ,   
-':Nom_Utilisateur' => $data->Nom_Utilisateur, ':Prenom_utilisateur'=> $data->Prenom_utilisateur   ));
+':Nom_Utilisateur' => $data->Nom_Utilisateur, ':Prenom_utilisateur'=> $data->Prenom_utilisateur ) );
 // Execution de la requête SQL qui va insérer les données d'inscription dans la base de donnée
 
   session_start();  // On ouvre la session
@@ -304,6 +304,7 @@ Flight::route('POST /candidature', function() {
      "",
   );
   $_FILES = Flight::request()->files;
+  //Récupère les données fichiers provenant de la page candidature.tpl
   $data = Flight::request()->data; 
   //Récupère les données provenant de la page candidature.tpl
   $messages=array();
@@ -312,65 +313,252 @@ Flight::route('POST /candidature', function() {
   //Initialisation du nombre d'erreur si l'utilisateur se trompe
 
   if (empty( $data->name )) { //Si la case name est vide alors erreur
-    $messages ['name']="Le nom doit être remplis!";
+    $messages['name']="Le nom doit être remplis!";
     $count_error+=1;
     }
     if (empty( $data->departement )) { //Si la case departement est vide alors erreur
-      $messages ['departement']="Le département doit être remplis!";
+      $messages['departement']="Le département doit être remplis!";
       $count_error+=1;
       }
-      if (empty( $data->stylemusical )) { //Si la case style musical est vide alors erreur
-        $messages ['stylemusical']="Le stylemusical doit être remplis!";
+      if ( empty ( $data->stylemusical ) ) { //Si la case style musical est vide alors erreur
+        $messages['stylemusical']="Le stylemusical doit être remplis!";
         $count_error+=1;
         }
         if (empty( $data->scene )) { //Si la case scène est vide alors erreur
-          $messages ['scene']="La scène doit être remplis!";
+          $messages['scene']="La scène doit être remplis!";
           $count_error+=1;
           }
           $now = date("Y-m");
           $year_user = $data->creation;
           if (empty( $data->creation )) { //Si la case scène est vide alors erreur
-            $messages ['creation']="La création doit être remplis!";
+            $messages['creation']="La création doit être remplis!";
             $count_error+=1;
             }
-    else if ( $now < $year_user ) {
-  $messages ['creation']="Votre date est dans le futur, mettez votre date de création de groupe!";
+    else if ( $now < $year_user ) { //Si la date est dans le futur
+  $messages['creation']="Votre date est dans le futur, mettez votre date de création de groupe!";
   $count_error+=1;
   }
-  if ( empty( $data->statusoui ) || empty( $data->statusnon ) ) {
-    $messages ['status']="Veuillez sélectionner Oui ou Non";
+  if ( empty( $data->status ) ) { //Si la case status est vide
+    $messages['status']="Veuillez sélectionner Oui ou Non";
     $count_error+=1;
   }
-  if ( empty( $data->sacemoui ) || empty( $data->sacemnon ) ) {
-    $messages ['sacem']="Veuillez sélectionner Oui ou Non";
+  if ( empty( $data->sacem) ) { //Si la case Sacem est vide
+    $messages['sacem']="Veuillez sélectionner Oui ou Non";
     $count_error+=1;
   }
-  if ( empty( $data->producteuroui ) || empty( $data->producteurnon ) ) {
-    $messages ['producteur']="Veuillez sélectionner Oui ou Non";
+  if ( empty( $data->producteur )  ) { //Si la case Producteur est vide
+    $messages['producteur']="Veuillez sélectionner Oui ou Non";
     $count_error+=1;
   }
+  if ( empty( $data->textexperience )  ) { //Si la case Texte Expérience est vide
+    $messages['textexperience']="Veuillez écrire votre expérience scénique";
+    $count_error+=1;
+  }
+  if ( empty( $data->textepresentation )  ) { //Si la case Texte Présentation est vide
+    $messages['textepresentation']="Veuillez écrire votre présentation";
+    $count_error+=1;
+  }
+
+  if (empty($_FILES['fmp3']) || empty($_FILES['smp3']) || empty($_FILES['tmp3'] ) ) {
+    $messages['mp3']="Veuillez mettre tous les fichiers demandés";
+    $count_error+=1; //Si les cases des fichiers MP3 sont vides
+  }
+  else if ($_FILES['fmp3']['name']== $_FILES['smp3']['name'] 
+  || $_FILES['fmp3']['name'] == $_FILES['tmp3']['name'] 
+  || $_FILES['smp3']['name'] == $_FILES['tmp3']['name'] ) {
+    $messages['mp3']="Veuillez ne pas mettre plusieurs fois le même fichier";
+    $count_error+=1; //Si les cases des fichiers MP3 ont les mêmes fichiers
+  }
+  if ( empty(  $_FILES['fphoto']) || empty( $_FILES['sphoto'] ) ) {
+    $messages['photo']="Veuillez mettre tous les fichiers demandés";
+    $count_error+=1; //Si les cases des photos sont vides
+  }
+  else if ($_FILES['fphoto']['name'] == $_FILES['sphoto']['name'] ) {
+    $messages['photo']="Veuillez ne pas mettre plusieurs fois le même fichier";
+    $count_error+=1; //Si les cases des photos ont les mêmes photos
+  }
+  if (  empty( $_FILES['fiche'] )  ) {
+    $messages['fiche']="Veuillez mettre le fichier demandé";
+    $count_error+=1;
+  }
+  if (  empty( $_FILES['docsacem'] )  ) {
+    $messages['docsacem']="Veuillez mettre le fichier demandé";
+    $count_error+=1;
+  }
+
+
+ if ($count_error==0) {
+
+  $name = $_FILES['fphoto']['name']; //Modification du nom de fphoto
+  function NomPhoto1($name){ 
+    $transliterator = Transliterator::createFromRules(
+   ':: NFD; :: [:Nonspacing Mark:] Remove; ::NFC;', Transliterator::FORWARD
+    );
+    $normalized = $transliterator->transliterate($name);
+    return ( $_FILES['fphoto']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized) );
+   }
+   $name=$_FILES['fphoto']['name'];
+  move_uploaded_file($_FILES['fphoto']['tmp_name'], "./files/Photos/$name");
+ //Upload du fichier fphoto sur le serveur et plus précisément dans le fichier Photos
+
+  $name = $_FILES['sphoto']['name']; //Modification du nom de sphoto
+  function NomPhoto2($name){ 
+    $transliterator = Transliterator::createFromRules(
+   ':: NFD; :: [:Nonspacing Mark:] Remove; ::NFC;', Transliterator::FORWARD
+    );
+    $normalized = $transliterator->transliterate($name);
+    return ( $_FILES['sphoto']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized) );
+   }
+   $name=$_FILES['sphoto']['name'];
+   move_uploaded_file($_FILES['sphoto']['name'], "./files/Photos/$name");
+  //Upload du fichier sphoto sur le serveur et plus précisément dans le fichier Photos
+
+  $name = $_FILES['fiche']['name']; //Modification du nom de fiche
+  function NomFiche($name){ 
+    $transliterator = Transliterator::createFromRules(
+   ':: NFD; :: [:Nonspacing Mark:] Remove; ::NFC;', Transliterator::FORWARD
+    );
+    $normalized = $transliterator->transliterate($name);
+    return ( $_FILES['fiche']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized) );
+   }
+   $name=$_FILES['fiche']['name'];
+  move_uploaded_file($_FILES['fiche']['name'], "./files/Fiche/$name");
+ //Upload du fichier fiche sur le serveur et plus précisément dans le fichier Fiche
+
+  $name = $_FILES['docsacem']['name']; //Modification du nom de docsacem
+  function NomSacem($name){ 
+    $transliterator = Transliterator::createFromRules(
+   ':: NFD; :: [:Nonspacing Mark:] Remove; ::NFC;', Transliterator::FORWARD
+    );
+    $normalized = $transliterator->transliterate($name);
+    return  $_FILES['docsacem']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
+   }
+   $name=$_FILES['docsacem']['name'];
+  move_uploaded_file($_FILES['docsacem']['name'], "./files/Sacem/$name");
+  //Upload du fichier docsacem sur le serveur et plus précisément dans le fichier Sacem
+
+  $name = $_FILES['fmp3']['name']; //Modification du nom de fmp3
+  function NomFMP3($name){ 
+    $transliterator = Transliterator::createFromRules(
+   ':: NFD; :: [:Nonspacing Mark:] Remove; ::NFC;', Transliterator::FORWARD
+    );
+    $normalized = $transliterator->transliterate($name);
+    return $_FILES['fmp3']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
+   }
+   $name=$_FILES['fmp3']['name'];
+  move_uploaded_file($_FILES['fmp3']['name'], "./files/MP3/$name");
+ //Upload du fichier fmp3 sur le serveur et plus précisément dans le fichier MP3
+
+  $name = $_FILES['smp3']['name']; //Modification du nom de smp3
+  function NomSMP3($name){ 
+    $transliterator = Transliterator::createFromRules(
+   ':: NFD; :: [:Nonspacing Mark:] Remove; ::NFC;', Transliterator::FORWARD
+    );
+    $normalized = $transliterator->transliterate($name);
+    return  $_FILES['smp3']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
+   }
+   $name=$_FILES['smp3']['name'];
+  move_uploaded_file($_FILES['smp3']['name'], "./files/MP3/$name");
+ //Upload du fichier smp3 sur le serveur et plus précisément dans le fichier MP3
+
+  $name = $_FILES['tmp3']['name']; //Modification du nom de tmp3
+  function NomTMP3($name){ 
+    $transliterator = Transliterator::createFromRules(
+   ':: NFD; :: [:Nonspacing Mark:] Remove; ::NFC;', Transliterator::FORWARD
+    );
+    $normalized = $transliterator->transliterate($name);
+    return $_FILES['tmp3']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
+   }
+   $name=$_FILES['tmp3']['name'];
+  move_uploaded_file($_FILES['tmp3']['name'], "./files/MP3/$name");
+  //Upload du fichier tmp3 sur le serveur et plus précisément dans le fichier MP3
+
+  if ( !empty( $_FILES['presse']['name'] ) ) {
+
+    $namePresse = $_FILES['presse']['name']; //Modification du nom de presse
+    function NomPresse($namePresse){ 
+      $transliterator = Transliterator::createFromRules(
+     ':: NFD; :: [:Nonspacing Mark:] Remove; ::NFC;', Transliterator::FORWARD
+      );
+      $normalized = $transliterator->transliterate($namePresse);
+      return $_FILES['presse']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
+     }
+     $namePresse = $_FILES['presse']['name'];
+    move_uploaded_file($_FILES['presse']['tmp_name'], "./files/Presse/$namePresse");
+     //Upload du fichier presse sur le serveur et plus précisément dans le fichier Presse
+
+    }
+    else {
+      
+    $namePresse='Pas de fichier presse';
+
+    }
+    if ($data->status =='OUI' ) { //Réécriture de la variable status en un booléen
+      $data->status=1;
+    }
+    else {
+      $data->status=0;
+    }
+
+    if ($data->sacem =='OUI' ) {  //Réécriture de la variable Sacem en un booléen
+      $data->sacem=1;
+    }
+    else {
+      $data->sacem=0;
+    }
+
+    if ($data->producteur =='OUI' ) { //Réécriture de la variable Producteur en un booléen
+      $data->producteur=1;
+    }
+    else {
+      $data->producteur=0;
+    }
+
+    if ( empty($data->Soundcloud) ) {
+
+      $data->Soundcloud='Pas de SoundCloud';
+
+    }
+
+    if ( empty($data->Youtube) ) {
+
+      $data->Youtube='Pas de chaîne';
+
+    }
   
 
-if ($count_error==0) {
+  $request = $db->prepare("insert into candidature values( :Nom_groupe ,
+  :Departement_origine , :Scene_groupe , :Annee_creation , :Style_musical , :Presentation ,
+  :Experiences_sceniques , :Page_groupe , :Soundcloud , :Youtube , :Statut_associatif , :Sacem ,
+  :Producteur, :Music1 , :DossierPressePDF , :Music3 , :Music2 , :Photo1 , :Photo2 ,
+  :Fiche_TechniquePDF , :DocumentSacemPDF )"); 
+     //Préparation de la requête SQL
 
+     $request->execute( array ( ':Nom_groupe'=> $data->name , ':Departement_origine'=> $data->departement , ':Scene_groupe' => $data->scene , ':Annee_creation' => $data->creation ,   
+     ':Style_musical' => $data->stylemusical , ':Presentation'=> $data->textepresentation , ':Experiences_sceniques'=>$data->texteexpericence , 
+     ':Page_groupe'=> $data->sitefb ,  ':Soundcloud'=> $data->soundcloud , ':Youtube'=> $data->youtube ,
+      ':Statut_associatif'=> $data->status , ':Sacem'=>$data->sacem , ':Producteur'=> $data->producteur , ':Music1'=>  $_FILES['fmp3']['name'] , 
+      ':DossierPressePDF'=> $namePresse , ':Music3' => $_FILES['tmp3']['name']  , ':Music2' => $_FILES['smp3']['name']  , 
+      ':Photo1' => $_FILES['fphoto']['name'] , ':Photo2' => $_FILES['sphoto']['name'] , ':Fiche_TechniquePDF' => $_FILES['fiche']['name'] , 
+      ':DocumentSacemPDF' => $_FILES['docsacem']['name'] ) );
+     // Execution de la requête SQL qui va insérer les données d'inscription dans la base de donnée
 
   Flight::redirect('./sucess');
 
   }
 
-else {
+ else {
 
-  $db = new PDO(  //Initialisation de db dans la route /login
+  $db = new PDO(  //Initialisation de db dans la route /candidature
     "mysql:host = localhost;
      port=3306;dbname=festival;charset=utf8",
      "root",
      "",
   );
 
-
   for ( $Nb = 1; $Nb < 7; $Nb++  ) {
     $recupDep = $db->prepare("SELECT Nom_Departement FROM département WHERE ID_Departement = ?");
-    //récupère si une donnée est déjà existante dans la base  7 fois 
+    //récupère si une donnée est déjà existante dans la base 7 fois 
     $recupDep->execute([$Nb]);
     $tabdep[$Nb]= $recupDep->fetchColumn();
   }
@@ -386,6 +574,11 @@ $tabscene[$Nb2]= $recupscene->fetchColumn();
   'tabdep' => $tabdep , 'tabscene' => $tabscene , 'files'=>$_FILES ));
   }
 });
+
+
+
+
+
 
 Flight::route('GET /vuecandidature', function(){
   session_start(); 
