@@ -22,7 +22,7 @@ Flight::route('GET /register', function(){
 Flight::route('GET /candidaturebis', function(){
   session_start();
   Flight::render("candidaturebis.tpl",array('SESSION'=>$_SESSION));
-})
+});
 
 Flight::route('POST /register' , function()  { 
   //La route qui permet d'enregistrer les données de la création de compte
