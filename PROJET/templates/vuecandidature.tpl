@@ -1,8 +1,8 @@
 {extends file='layout.tpl'}
-{block name=title}VueCandidature{/block}
+{block name=title}Profil Candidature{/block}
 {block name=body}
 
-<div id='main'>
+<main class="flex"> 
 
 <h1>Ma Candidature:</h1>
 
@@ -16,5 +16,5 @@ Adresse Postal: {$SESSION['Adresse_utilisateur']|default:''} <br>
 
 Code Postal: {$SESSION['Code_postal']|default:''}
 
-</div>
+</main>
 {/block}
