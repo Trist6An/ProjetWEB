@@ -403,7 +403,7 @@ $titre=$_FILES['fmp3']['name'];
     $normalized = $transliterator->transliterate($namef);
     return ( $_FILES['fphoto']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized) );
    }
-   $namef=$_FILES['fphoto']['name'];
+   $namef=$data->name."_Photo1.PNG";
   move_uploaded_file($_FILES['fphoto']['tmp_name'], "./files/Photos/$namef");
  //Upload du fichier fphoto sur le serveur et plus précisément dans le fichier Photos
 
@@ -415,7 +415,7 @@ $titre=$_FILES['fmp3']['name'];
     $normalized = $transliterator->transliterate($names);
     return ( $_FILES['sphoto']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized) );
    }
-   $names=$_FILES['sphoto']['name'];
+   $names=$data->name."_Photo2.PNG";
    move_uploaded_file($_FILES['sphoto']['tmp_name'], "./files/Photos/$names");
   //Upload du fichier sphoto sur le serveur et plus précisément dans le fichier Photos
 
@@ -427,7 +427,7 @@ $titre=$_FILES['fmp3']['name'];
     $normalized = $transliterator->transliterate($namefi);
     return ( $_FILES['fiche']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized) );
    }
-   $namefi=$_FILES['fiche']['name'];
+   $namefi=$data->name."_fiche_technique.pdf";
   move_uploaded_file($_FILES['fiche']['tmp_name'], "./files/Fiche/$namefi");
  //Upload du fichier fiche sur le serveur et plus précisément dans le fichier Fiche
 
@@ -439,7 +439,7 @@ $titre=$_FILES['fmp3']['name'];
     $normalized = $transliterator->transliterate($namesa);
     return  $_FILES['docsacem']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
    }
-   $namesa=$_FILES['docsacem']['name'];
+   $namesa=$data->name."_Sacem.pdf";
   move_uploaded_file($_FILES['docsacem']['tmp_name'], "./files/Sacem/$namesa");
   //Upload du fichier docsacem sur le serveur et plus précisément dans le fichier Sacem
 
@@ -451,7 +451,7 @@ $titre=$_FILES['fmp3']['name'];
     $normalized = $transliterator->transliterate($namefmp3);
     return $_FILES['fmp3']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
    }
-   $namefmp3=$_FILES['fmp3']['name'];
+   $namefmp3=$data->name."music1.mp3";
   move_uploaded_file($_FILES['fmp3']['tmp_name'], "./files/MP3/$namefmp3");
  //Upload du fichier fmp3 sur le serveur et plus précisément dans le fichier MP3
 
@@ -463,7 +463,7 @@ $titre=$_FILES['fmp3']['name'];
     $normalized = $transliterator->transliterate($namesmp3);
     return  $_FILES['smp3']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
    }
-   $namesmp3=$_FILES['smp3']['name'];
+   $namesmp3=$data->name."music2.mp3";
   move_uploaded_file($_FILES['smp3']['tmp_name'], "./files/MP3/$namesmp3");
  //Upload du fichier smp3 sur le serveur et plus précisément dans le fichier MP3
 
@@ -475,7 +475,7 @@ $titre=$_FILES['fmp3']['name'];
     $normalized = $transliterator->transliterate($nametmp3);
     return $_FILES['tmp3']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
    }
-   $nametmp3=$_FILES['tmp3']['name'];
+   $nametmp3=$data->name."music3.mp3";
   move_uploaded_file($_FILES['tmp3']['tmp_name'], "./files/MP3/$nametmp3");
   //Upload du fichier tmp3 sur le serveur et plus précisément dans le fichier MP3
 
@@ -489,7 +489,7 @@ $titre=$_FILES['fmp3']['name'];
       $normalized = $transliterator->transliterate($namePresse);
       return $_FILES['presse']['name']=preg_replace("/[^a-zA-Z0-9\.]/","-",$normalized);
      }
-     $namePresse = $_FILES['presse']['name'];
+     $namePresse = $data->name."presse.pdf";
     move_uploaded_file($_FILES['presse']['tmp_name'], "./files/Presse/$namePresse");
      //Upload du fichier presse sur le serveur et plus précisément dans le fichier Presse
 
@@ -544,13 +544,13 @@ $titre=$_FILES['fmp3']['name'];
      $request->execute( array ( ':Nom_groupe'=> $data->name , ':Departement_origine'=> $data->departement , ':Scene_groupe' => $data->scene , ':Annee_creation' => $data->creation ,   
      ':Style_musical' => $data->stylemusical , ':Presentation'=> $data->textepresentation , ':Experiences_sceniques'=>$data->texteexpericence , 
      ':Page_groupe'=> $data->sitefb ,  ':Soundcloud'=> $data->soundcloud , ':Youtube'=> $data->youtube ,
-      ':Statut_associatif'=> $data->status , ':Sacem'=>$data->sacem , ':Producteur'=> $data->producteur , ':Music1'=>  $_FILES['fmp3']['name'] , 
-      ':DossierPressePDF'=> $namePresse , ':Music3' => $_FILES['tmp3']['name'] , ':Music2' => $_FILES['smp3']['name']  , 
-      ':Photo1' => $_FILES['fphoto']['name'] , ':Photo2' => $_FILES['sphoto']['name'] , ':Fiche_TechniquePDF' => $_FILES['fiche']['name'] , 
-      ':DocumentSacemPDF' => $_FILES['docsacem']['name'] , ':Mail_Responsable'=> $mail ) );
+      ':Statut_associatif'=> $data->status , ':Sacem'=>$data->sacem , ':Producteur'=> $data->producteur , ':Music1'=> $nametmp3 , 
+      ':DossierPressePDF'=> $namePresse , ':Music3' => $nametmp3 , ':Music2' =>  $namesmp3 , 
+      ':Photo1' => $namef , ':Photo2' => $names , ':Fiche_TechniquePDF' => $namefi  , 
+      ':DocumentSacemPDF' => $namesa , ':Mail_Responsable'=> $mail ) );
      // Execution de la requête SQL qui va insérer les données d'inscription dans la base de donnée
 
-  Flight::redirect('./candidaturebis');
+  Flight::redirect('./sucess');
 
   }
 
